@@ -69,7 +69,7 @@ function Container() {
         setTextDecoration(e.target.value);
         break;
       case "TextShadow":
-        setTextShadow(e.target.value + "px");
+        setTextShadow(e.target.value);
         break;
       case "borderRadius":
         setBorderRadius(e.target.value + "px");
@@ -104,6 +104,7 @@ function Container() {
     // document.getElementsByClassName(
     // "form-container"
     // )[0].children[2].textContent = eg;
+    document.getElementsByClassName("form-inp")[0].focus();
   }
   function closeForm() {
     document
@@ -117,15 +118,22 @@ function Container() {
       : (document.getElementById("object").textContent = text);
   }, [text]);
 
-  function searchOpen() {
-    document
-      .getElementsByClassName("search-container")[0]
-      .classList.add("open");
-  }
-
   setTimeout(() => {
     document.getElementsByClassName("intro")[0].style.display = "none";
   }, 1500);
+
+  useEffect(() => {
+    addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeForm();
+      if (e.key === "Enter") closeForm();
+    });
+    return () => {
+      removeEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeForm();
+        if (e.key === "Enter") closeForm();
+      });
+    };
+  });
 
   return (
     <>
